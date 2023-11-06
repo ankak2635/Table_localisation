@@ -3,7 +3,6 @@ sys.path.append('/home/ankit/Data_Science/CV_Projects/OrderStack')  # fix import
 
 from ultralytics import YOLO
 from src.data_ingestion import Data_Ingestion
-import utils
 import os
 import shutil
 
@@ -20,13 +19,13 @@ class Model_Trainer:
             obj = Data_Ingestion(image_dir=self.image_dir, labels_dir=self.label_dir)
             obj.initiate_data_ingestion()
 
-            # # load the model
-            # model = YOLO("yolov8n.yaml")
-            # print("Loaded the YOLOv8 nano model")
+            # load the model
+            model = YOLO("yolov8n.yaml")
+            print("Loaded the YOLOv8 nano model")
 
-            # # initiate training
-            # model.train(data='./training_data/yolo_config.yaml', epochs=500)
-            # print("Training completed")
+            # initiate training
+            model.train(data='./training_data/yolo_config.yaml', epochs=500)
+            print("Training completed")
 
             # create a copy of the best model in trained_model dir
             dir_name= "trained_model"
