@@ -3,6 +3,9 @@ sys.path.append('/home/ankit/Data_Science/CV_Projects/OrderStack')  # fix import
 
 from ultralytics import YOLO
 from src.data_ingestion import Data_Ingestion
+import utils
+import os
+import shutil
 
 class Model_Trainer:
 
@@ -17,13 +20,25 @@ class Model_Trainer:
             obj = Data_Ingestion(image_dir=self.image_dir, labels_dir=self.label_dir)
             obj.initiate_data_ingestion()
 
-            # load the model
-            model = YOLO("yolov8n.yaml")
-            print("Loaded the YOLOv8 nano model")
+            # # load the model
+            # model = YOLO("yolov8n.yaml")
+            # print("Loaded the YOLOv8 nano model")
 
-            # initiate training
-            model.train(data='./training_data/yolo_config.yaml', epochs=500)
-            print("Training completed")
+            # # initiate training
+            # model.train(data='./training_data/yolo_config.yaml', epochs=500)
+            # print("Training completed")
+
+            # create a copy of the best model in trained_model dir
+            dir_name= "trained_model"
+            if not os.path.exists(dir_name):
+                os.makedirs(dir_name)
+                print(f"'{dir_name}' directory created.")
+            else:
+                print(f" '{dir_name}' already exists.")
+
+            # move the best model to the dir
+            best_model_path = './runs/detect/train/weights/best.pt'
+            shutil.copy(best_model_path, "./trained_model")
 
         except Exception as e:
             print('An error occurred while trying to train the model: ', str(e))
