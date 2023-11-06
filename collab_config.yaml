@@ -1,0 +1,9 @@
+path: /content/drive/MyDrive/OrderStack/data_1
+train: images/train
+val: images/val
+test: images/test
+
+# number of classes
+nc: 3
+
+name: [0,1,2]
