@@ -1,6 +1,7 @@
 from ultralytics import YOLO
 import os
 import numpy as np
+from ultralytics.utils.plotting import Annotator
 
 class Predict:
     def __init__(self):
@@ -28,11 +29,20 @@ class Predict:
             trained_model = YOLO(self.trained_model)
 
             # make prediction for the new image
-            prediction_result = trained_model.predict(image, conf = 0.6, show_conf = False)
+            results = trained_model.predict(image, conf = 0.6, show_conf = False)
 
-            # Extract the image from the prediction result
-            predicted_image = prediction_result[0].orig_img
-            print(predicted_image)
+            for r in results:
+        
+                annotator = Annotator(image)
+                
+                boxes = r.boxes
+                for box in boxes:
+                    
+                    b = box.xyxy[0]  # get box coordinates in (top, left, bottom, right) format
+                    c = box.cls
+                    annotator.box_label(b, trained_model.names[int(c)])
+                
+            predicted_image = annotator.result()
 
             # Ensure that the image is a NumPy array
             if isinstance(predicted_image, np.ndarray):
