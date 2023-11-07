@@ -26,6 +26,11 @@ class Data_Ingestion:
             print("Data paths reading completed")
 
             # data transformation
+            """
+            - resizing - not needed as YOLO lets you pass the size argument 
+            - data augmentation - best suited augmentation methods for the use case are specified in the yolo_config.yaml
+            - best suited augmentation are obtained after hyperparameter tuning.
+            """
 
 
             # prepare data as per YOLO requirements
