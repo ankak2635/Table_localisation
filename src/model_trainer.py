@@ -39,7 +39,9 @@ class Model_Trainer:
             print("Loaded the YOLOv8 nano model")
 
             # initiate training
-            model.train(data='./training_data/yolo_config.yaml', epochs=500)
+            model.train(data='./yolo_config.yaml', epochs=1) # a dummy training 
+            # model.train(data='./yolo_config.yaml', epochs=500) #uncoment if you want to train loacally
+            
             print("Training completed")
 
             # create a copy of the best model in models dir

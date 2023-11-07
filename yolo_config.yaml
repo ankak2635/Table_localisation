@@ -1,0 +1,9 @@
+path: /home/ankit/Data_Science/CV_Projects/OrderStack/training_data
+train: images/train
+val: images/val
+test: images/test
+
+# number of classes
+nc: 3
+
+name: [0,1,2]
