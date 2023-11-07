@@ -5,6 +5,10 @@ from ultralytics.utils.plotting import Annotator
 
 class Predict:
     def __init__(self):
+        """
+        Initialize the Predict module.
+        """
+
         self.trained_model  = "./models/trained.pt"
         self.finetuned_model = "./models/finetuned.pt"
         self.test_image_dir = "./training_data/images/test"
@@ -14,6 +18,10 @@ class Predict:
                                    for filename in os.listdir(self.test_image_dir) if filename.endswith('.jpg')])
 
     def make_predictions(self):
+        """
+        Make predictions on test images using both trained and finetuned YOLO models.
+        Save the predictions in separate directories.
+        """
         try:
             # load the trained model
             trained_model = YOLO(self.trained_model)
@@ -34,6 +42,13 @@ class Predict:
     def new_image_predict(self, image):
         """
         Function that takes an image path, makes predictions with the finetuned model,
+        annotates the detected objects, and returns the annotated image as a NumPy array.
+
+        Args:
+            image: The image to make predictions on.
+
+        Returns:
+            np.ndarray: Annotated image as a NumPy array.
         """
         try:
             model = YOLO(self.finetuned_model)
