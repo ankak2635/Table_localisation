@@ -9,10 +9,25 @@ import shutil
 class Model_Trainer:
 
     def __init__(self, image_dir_path, label_dir_path):
+        """
+        Initialize the Model Trainer.
+
+        Args:
+            image_dir_path (str): The path to the directory containing images of tables.
+            label_dir_path (str): The path to the directory containing YOLO format labels for the images.
+        """
+
         self.image_dir= image_dir_path
         self.label_dir = label_dir_path
 
     def initiate_model_training(self):
+        """
+        Initiate the model training process.
+        - Data ingestion: Organizes data into train, validation, and test sets.
+        - Model loading: Loads the YOLOv8 model.
+        - Training: Trains the model for table detection.
+        - Best Model Saving: Saves the best model as 'trained.pt'.
+        """
         try:
 
             # call the data_ingestion module
@@ -27,17 +42,19 @@ class Model_Trainer:
             model.train(data='./training_data/yolo_config.yaml', epochs=500)
             print("Training completed")
 
-            # create a copy of the best model in trained_model dir
-            dir_name= "trained_model"
+            # create a copy of the best model in models dir
+            dir_name= "models"
             if not os.path.exists(dir_name):
                 os.makedirs(dir_name)
                 print(f"'{dir_name}' directory created.")
             else:
                 print(f" '{dir_name}' already exists.")
 
-            # move the best model to the dir
+            # copy the best model to the dir
             best_model_path = './runs/detect/train/weights/best.pt'
-            shutil.copy(best_model_path, "./trained_model")
+            trained_model_path = './models/trained.pt'
+            shutil.copy(best_model_path, trained_model_path)
+            print(f"Best model saved as '{trained_model_path}'")
 
         except Exception as e:
             print('An error occurred while trying to train the model: ', str(e))

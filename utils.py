@@ -3,6 +3,15 @@ import cv2
 import shutil
 
 def parse_yolo_annotations(directory):
+    """
+    Parses YOLO format annotations from text files in the specified directory.
+
+    Args:
+        directory (str): The directory containing YOLO format annotation text files.
+
+    Returns:
+        list: A list of annotations for each image.
+    """
     all_annotations = []
     
     # List all text files in the directory
@@ -24,15 +33,6 @@ def parse_yolo_annotations(directory):
             width = float(parts[3])  # Width of the bounding box (float)
             height = float(parts[4])  # Height of the bounding box (float)
 
-            # Create a dictionary to store the annotation information
-            # annotation = {
-            #     "class_id": class_id,
-            #     "center_x": center_x,
-            #     "center_y": center_y,
-            #     "width": width,
-            #     "height": height
-            # }
-
             annotation = [class_id, center_x, center_y, width, height]
             annotations.append(annotation)
 
@@ -41,6 +41,16 @@ def parse_yolo_annotations(directory):
     return all_annotations
 
 def draw_bounding_boxes(image, annotations):
+    """
+    Draws bounding boxes on an image based on the provided annotations.
+
+    Args:
+        image (numpy.ndarray): The image on which to draw bounding boxes.
+        annotations (list): A list of annotations for each bounding box.
+
+    Returns:
+        numpy.ndarray: The image with bounding boxes drawn.
+    """
     for annotation in annotations:
         class_id = annotation[0]
         center_x = annotation[1]
@@ -63,6 +73,10 @@ def draw_bounding_boxes(image, annotations):
 
 # define a function to create and move the data to directories
 def create_dirs():
+    """
+    Creates the necessary directory structure for organizing data for YOLO training.
+    """
+
     # create directories
     main_folder = "training_data"  #parent folder
 
@@ -115,6 +129,13 @@ def create_dirs():
             
 
 def move_to_folder(list_of_files, destination):
+    """
+    Moves a list of files to the specified destination folder.
+
+    Args:
+        list_of_files (list): A list of file paths to move.
+        destination (str): The destination folder where files should be moved.
+    """
     for f in list_of_files:
         try:
             shutil.copy(f, destination)
